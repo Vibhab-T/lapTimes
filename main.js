@@ -60,9 +60,12 @@ async function getLapTimes(key, driverNumber) {
     op.appendChild(orderList);
 
     for (let i = 0; i < data.length; i++) {
-      if (data[i].lap_duration > 60) {
+      if (data[i].lap_duration >= 60 && data[i].lap_duration < 120) {
         remainder = (data[i].lap_duration - 60).toFixed(3);
         display("1:" + remainder);
+      } else if (data[i].lap_duration >= 120) {
+        remainder = (data[i].lap_duration - 120).toFixed(3);
+        display("2:" + remainder);
       } else {
         display(data[i].lap_duration);
       }
