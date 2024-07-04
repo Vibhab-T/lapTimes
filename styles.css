@@ -1,0 +1,19 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+.output {
+  position: absolute;
+  left: 0px;
+  margin-top: 10px;
+}
+
+.list li {
+  position: relative;
+  left: 100px;
+  right: 0px;
+  border: 1px solid black;
+  padding: 5px;
+  background-color: rgba(128, 128, 128, 0.233);
+}

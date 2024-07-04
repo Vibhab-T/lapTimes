@@ -1,9 +1,3 @@
-// let track = "China";
-// let sessionName = "Sprint";
-// let sessionType = "Race";
-// let year = "2024";
-// let driverNumber = 16;
-
 function init() {
   let track = document.getElementById("track").value;
   let sessionName = document.getElementById("race-type").value;
@@ -53,12 +47,20 @@ async function getLapTimes(key, driverNumber) {
 
     let op = document.querySelector(".output");
     empty(op);
+
     let orderList = document.createElement("ol");
     let listClassAttr = document.createAttribute("class");
     listClassAttr.value = "list";
     orderList.setAttributeNode(listClassAttr);
     op.appendChild(orderList);
 
+    let averageSection = document.createElement("div");
+    let avgClass = document.createAttribute("class");
+    avgClass.value = "average";
+    averageSection.setAttributeNode(avgClass);
+    op.appendChild(averageSection);
+
+    let totalRaceLapTime = 0;
     for (let i = 0; i < data.length; i++) {
       if (data[i].lap_duration >= 60 && data[i].lap_duration < 120) {
         remainder = (data[i].lap_duration - 60).toFixed(3);
@@ -69,6 +71,18 @@ async function getLapTimes(key, driverNumber) {
       } else {
         display(data[i].lap_duration);
       }
+      totalRaceLapTime += data[i].lap_duration;
+    }
+
+    let averageLapTime = totalRaceLapTime / data.length;
+    if (averageLapTime >= 60 && averageLapTime < 120) {
+      displayAverage("Average Lap Time: 1." + (averageLapTime - 60).toFixed(3));
+    } else if (averageLapTime >= 120) {
+      displayAverage(
+        "Average Lap Time: 2." + (averageLapTime - 120).toFixed(3)
+      );
+    } else {
+      displayAverage("Average Lap Time: " + averageLapTime.toFixed(3));
     }
   } catch (error) {
     console.error(error);
@@ -82,6 +96,14 @@ function display(text) {
   listElement.textContent = text;
 
   list.appendChild(listElement);
+}
+
+function displayAverage(text) {
+  let average = document.querySelector(".average");
+
+  average.textContent = text;
+
+  average.appendChild(average);
 }
 
 function empty(element) {
